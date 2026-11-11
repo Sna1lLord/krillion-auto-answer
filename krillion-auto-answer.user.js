@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Krillion Puffer Party / Daily Dive Auto Answer
-// @namespace    https://github.com/YOUR-USERNAME/krillion-auto-answer
-// @author       YOUR-USERNAME
-// @homepageURL  https://github.com/YOUR-USERNAME/krillion-auto-answer
-// @supportURL   https://github.com/YOUR-USERNAME/krillion-auto-answer/issues
-// @updateURL    https://raw.githubusercontent.com/YOUR-USERNAME/krillion-auto-answer/main/krillion-auto-answer.user.js
-// @downloadURL  https://raw.githubusercontent.com/YOUR-USERNAME/krillion-auto-answer/main/krillion-auto-answer.user.js
+// @namespace    https://github.com/Sna1lLord/krillion-auto-answer
+// @author       Sna1lLord
+// @homepageURL  https://github.com/Sna1lLord/krillion-auto-answer
+// @supportURL   https://github.com/Sna1lLord/krillion-auto-answer/issues
+// @updateURL    https://raw.githubusercontent.com/Sna1lLord/krillion-auto-answer/main/krillion-auto-answer.user.js
+// @downloadURL  https://raw.githubusercontent.com/Sna1lLord/krillion-auto-answer/main/krillion-auto-answer.user.js
 // @license      MIT
 // @version      4.2
 // @description  Answers the current Krillion prompt with the best unused answer (Daily Dive + Puffer Party)
