@@ -6,12 +6,12 @@
 
 A tiny Tampermonkey userscript for [Krillion](https://krillion.io) that answers the current prompt for you, in both the **Daily Dive** and **Puffer Party**, picking the rarest answer that hasn't been used yet.
 
-[![Install](https://img.shields.io/badge/Install-Tampermonkey-00485B?style=for-the-badge&logo=tampermonkey&logoColor=white)](https://raw.githubusercontent.com/YOUR-USERNAME/krillion-auto-answer/main/krillion-auto-answer.user.js)
-[![GitHub stars](https://img.shields.io/github/stars/YOUR-USERNAME/krillion-auto-answer?style=for-the-badge&logo=github)](https://github.com/YOUR-USERNAME/krillion-auto-answer/stargazers)
+[![Install](https://img.shields.io/badge/Install-Tampermonkey-00485B?style=for-the-badge&logo=tampermonkey&logoColor=white)](https://raw.githubusercontent.com/Sna1lLord/krillion-auto-answer/main/krillion-auto-answer.user.js)
+[![GitHub stars](https://img.shields.io/github/stars/Sna1lLord/krillion-auto-answer?style=for-the-badge&logo=github)](https://github.com/Sna1lLord/krillion-auto-answer/stargazers)
 [![Version](https://img.shields.io/badge/version-4.2-ff8a3d?style=for-the-badge)](krillion-auto-answer.user.js)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
 
-[Install](#-installation) · [Usage](#-usage) · [How it works](#-how-it-works) · [Settings](#%EF%B8%8F-settings) · [FAQ](#-faq) · [Report a bug](https://github.com/YOUR-USERNAME/krillion-auto-answer/issues/new/choose)
+[Install](#-installation) · [Usage](#-usage) · [How it works](#-how-it-works) · [Settings](#%EF%B8%8F-settings) · [FAQ](#-faq) · [Report a bug](https://github.com/Sna1lLord/krillion-auto-answer/issues/new/choose)
 
 </div>
 
@@ -32,7 +32,7 @@ A tiny Tampermonkey userscript for [Krillion](https://krillion.io) that answers 
 ## 📦 Installation
 
 1. Install the **[Tampermonkey](https://www.tampermonkey.net/)** browser extension (Chrome, Firefox, Edge, Safari, Opera).
-2. **[Click here to install the script](https://raw.githubusercontent.com/YOUR-USERNAME/krillion-auto-answer/main/krillion-auto-answer.user.js)**. Tampermonkey opens an install page; click **Install**.
+2. **[Click here to install the script](https://raw.githubusercontent.com/Sna1lLord/krillion-auto-answer/main/krillion-auto-answer.user.js)**. Tampermonkey opens an install page; click **Install**.
 3. Open [krillion.io](https://krillion.io). The first time, Tampermonkey asks whether the script may connect to `thewordfinder.com` (the answer sheets) and `api.openai.com`. Choose **Always allow domain**.
 4. *(Optional)* Add an OpenAI API key for the AI fallback: click the Tampermonkey icon, choose **Krillion Puffer Party / Daily Dive Auto Answer**, then **Set OpenAI API key**.
 
@@ -124,13 +124,13 @@ This is an unofficial fan project and isn't affiliated with Krillion or The Word
 
 ## 🤝 Contributing
 
-Issues and pull requests are welcome. If Krillion changes its page layout and the script stops working, [open a bug report](https://github.com/YOUR-USERNAME/krillion-auto-answer/issues/new/choose) and include the page's HTML (in the console, run `copy(document.documentElement.outerHTML)` and paste it into a file).
+Issues and pull requests are welcome. If Krillion changes its page layout and the script stops working, [open a bug report](https://github.com/Sna1lLord/krillion-auto-answer/issues/new/choose) and include the page's HTML (in the console, run `copy(document.documentElement.outerHTML)` and paste it into a file).
 
 ## ⭐ Star it
 
-If this saved your dive, **[leave a star](https://github.com/YOUR-USERNAME/krillion-auto-answer)** ⭐ It helps other krill find it.
+If this saved your dive, **[leave a star](https://github.com/Sna1lLord/krillion-auto-answer)** ⭐ It helps other krill find it.
 
-[![Star History Chart](https://api.star-history.com/svg?repos=YOUR-USERNAME/krillion-auto-answer&type=Date)](https://star-history.com/#YOUR-USERNAME/krillion-auto-answer&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Sna1lLord/krillion-auto-answer&type=Date)](https://star-history.com/#Sna1lLord/krillion-auto-answer&Date)
 
 ## 📄 License
 
