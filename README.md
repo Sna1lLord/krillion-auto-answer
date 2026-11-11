@@ -17,18 +17,6 @@ A tiny Tampermonkey userscript for [Krillion](https://krillion.io) that answers 
 
 ---
 
-## ✨ Features
-
-| | |
-|---|---|
-| 🌟 **Goes for the gem** | Uses Krillion's own answer sheets to pick the **One in a Krillion** when it's still available |
-| 🏮 **Then the best of the rest** | Falls back to a **Deep Cut**, then a random short **Rare**, so answers are both high-scoring and accepted |
-| 🧠 **Learns while you play** | In Puffer Party every answer bubble is coloured by tier, so the script remembers which answers scored what, per category |
-| 🚫 **Never repeats** | Tracks what everyone in the room has already said this category, including plurals and accents |
-| 🤖 **AI fallback** | Unknown category? Asks OpenAI for valid, moderately uncommon answers, with adjustable nicheness |
-| ⌨️ **Types like a human** | Types character by character with randomised timing, then sends |
-| 🫥 **Low-key UI** | A small dot pinned to the right end of the answer box, plus a faint list of suggestions in the top-right corner |
-
 ## 📦 Installation
 
 1. Install the **[Tampermonkey](https://www.tampermonkey.net/)** browser extension (Chrome, Firefox, Edge, Safari, Opera).
