@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         Krillion Puffer Party / Daily Dive Auto Answer
-// @namespace    https://github.com/Sna1lLord/krillion-auto-answer
-// @author       Sna1lLord
-// @homepageURL  https://github.com/Sna1lLord/krillion-auto-answer
-// @supportURL   https://github.com/Sna1lLord/krillion-auto-answer/issues
-// @updateURL    https://raw.githubusercontent.com/Sna1lLord/krillion-auto-answer/main/krillion-auto-answer.user.js
-// @downloadURL  https://raw.githubusercontent.com/Sna1lLord/krillion-auto-answer/main/krillion-auto-answer.user.js
+// @namespace    https://github.com/YOUR-USERNAME/krillion-auto-answer
+// @author       YOUR-USERNAME
+// @homepageURL  https://github.com/YOUR-USERNAME/krillion-auto-answer
+// @supportURL   https://github.com/YOUR-USERNAME/krillion-auto-answer/issues
+// @updateURL    https://raw.githubusercontent.com/YOUR-USERNAME/krillion-auto-answer/main/krillion-auto-answer.user.js
+// @downloadURL  https://raw.githubusercontent.com/YOUR-USERNAME/krillion-auto-answer/main/krillion-auto-answer.user.js
 // @license      MIT
-// @version      4.2
+// @version      4.3
 // @description  Answers the current Krillion prompt with the best unused answer (Daily Dive + Puffer Party)
 // @match        https://krillion.io/*
 // @match        https://www.krillion.io/*
@@ -274,20 +274,41 @@
       'Return JSON {"answers": string[]} with 8 answers, best first. Each: common name only, 1-4 words, no explanations, standard spelling.';
     const user = `Category: ${category}\n\nAlready used (do not repeat): ${[...used].join(', ') || 'none'}` +
       (known.length ? `\n\nExamples the game has accepted before (style guide): ${known.slice(0, 30).join(', ')}` : '');
+    const messages = [{ role: 'system', content: sys }, { role: 'user', content: user }];
+    return chatJSON(messages).then(o => (o.answers || []).map(String).filter(Boolean));
+  }
+
+  const dropped = {};
+  function chatJSON(messages) {
+    const model = cfg.model;
+    const skip = dropped[model] || (dropped[model] = new Set());
+    const body = { model, messages };
+    if (!skip.has('temperature')) body.temperature = 0.8;
+    if (!skip.has('response_format')) body.response_format = { type: 'json_object' };
+    if (!skip.has('reasoning_effort') && /^(o\d|gpt-5|gpt-6)/i.test(model)) body.reasoning_effort = 'none';
+
     return new Promise((resolve, reject) => GM_xmlhttpRequest({
-      method: 'POST', url: 'https://api.openai.com/v1/chat/completions', timeout: 15000,
+      method: 'POST', url: 'https://api.openai.com/v1/chat/completions', timeout: 30000,
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${cfg.key}` },
-      data: JSON.stringify({ model: cfg.model, temperature: 0.8, response_format: { type: 'json_object' },
-        messages: [{ role: 'system', content: sys }, { role: 'user', content: user }] }),
+      data: JSON.stringify(body),
       onload: (r) => {
-        try {
-          const j = JSON.parse(r.responseText);
-          if (j.error) return reject(new Error(j.error.message));
-          resolve((JSON.parse(j.choices[0].message.content).answers || []).map(String).filter(Boolean));
-        } catch (e) { reject(e); }
+        let j;
+        try { j = JSON.parse(r.responseText); } catch (e) { return reject(new Error(`HTTP ${r.status}`)); }
+        if (j.error) {
+          const msg = j.error.message || '';
+          const bad = ['temperature', 'response_format', 'reasoning_effort'].find(k => !skip.has(k) && (j.error.param === k || msg.includes(k)));
+          if (bad) { skip.add(bad); return chatJSON(messages).then(resolve, reject); }
+          return reject(new Error(msg || `HTTP ${r.status}`));
+        }
+        const text = j.choices?.[0]?.message?.content || '';
+        try { resolve(JSON.parse(text)); }
+        catch (e) {
+          const m = text.match(/\{[\s\S]*\}/);
+          try { resolve(JSON.parse(m ? m[0] : '')); } catch (e2) { reject(new Error('model did not return JSON')); }
+        }
       },
       onerror: () => reject(new Error('network error')),
-      ontimeout: () => reject(new Error('timeout')),
+      ontimeout: () => reject(new Error('timeout (30s)')),
     }));
   }
 
@@ -371,11 +392,12 @@
   const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const aiCache = new Map();
   let lastAiAsk = 0;
+  let aiError = '';
   function aiForCorner(p) {
     if (!cfg.key || aiCache.has(p) || Date.now() - lastAiAsk < 5000) return;
     lastAiAsk = Date.now();
     aiCache.set(p, 'pending');
-    askOpenAI(p, []).then(a => aiCache.set(p, a)).catch(() => aiCache.set(p, 'error'));
+    askOpenAI(p, []).then(a => aiCache.set(p, a)).catch(e => { aiCache.set(p, 'error'); aiError = e.message; console.warn('[puffer-bot] AI error:', e.message); });
   }
 
   let lastSheetHtml = '';
@@ -393,7 +415,7 @@
       const fresh = Array.isArray(ai) ? ai.filter(a => !isUsed(a)).slice(0, 6) : [];
       if (Array.isArray(ai) && !fresh.length) aiCache.delete(p);
       html = fresh.length ? line('', fresh)
-        : ai === 'error' ? note('AI error - retrying')
+        : ai === 'error' ? note(`AI error: ${esc(aiError)} - retrying`)
         : note('asking AI...');
       if (ai === 'error') setTimeout(() => { if (aiCache.get(p) === 'error') aiCache.delete(p); }, 5000);
     }
